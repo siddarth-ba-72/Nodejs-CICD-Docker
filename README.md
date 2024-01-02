@@ -4,6 +4,31 @@
 - Develop the Application
 - Push on GitHub
 
+## Dockerization
+- Create a `Dockerfile` in your project's root folder
+- Copy the  below content
+```
+FROM node:16.20.1
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm","run","start"]
+```
+- Create a repository on [Docker Hub](https://hub.docker.com)
+- In your project terminal
+```
+docker build -t <image_name> .
+```
+```
+docker tag <image_name>:latest <repository_name>
+```
+```
+docker push <repository_name>
+```
+- This will push your remote image on Docker Hub
+
 ## EC2 Instance
 - Create an AWS EC2 instance
 - Add an actions runner in GitHub to connect to aws-ec2 instance
@@ -24,7 +49,7 @@ sudo dnf install libicu
 ```
 sudo rpm -Uvh https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
 ```
-- For further requirements we need `docker`
+- We also need to install `docker`
 ```
 sudo yum update -y
 sudo yum -y install docker
@@ -50,20 +75,6 @@ tar xzf ./actions-runner-linux-x64-2.311.0.tar.gz
 ```
 ./run.sh
 ```
-
-## Dockerization
-- Create a repository on [Docker Hub](https://hub.docker.com)
-- In your project terminal
-```
-docker build -t <image_name> .
-```
-```
-docker tag <image_name>:latest <repository_name>
-```
-```
-docker push <repository_name>
-```
-- This will push your remote image on Docker Hub
 
 ## CI/CD Pipeline
 - Go tp your project root directory and create `.github/workflows/cicd_workflow.yml` file
